@@ -1,5 +1,6 @@
 package com.conn.exam;
 
+import com.conn.db.Employees;
 
 public class Employees2 {
 	
