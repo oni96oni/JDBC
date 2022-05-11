@@ -1,36 +1,48 @@
 package com.conn.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Employees {
-	public void getSalary(int salary) throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
 
-		Connection conn = DriverManager.getConnection(
-				"jdbc:oracle:thin:@127.0.0.1:1521/XE","puser1", "puser1"
-				);
+	private DBConn db;
 
-		Statement stat = conn.createStatement();
-
-		ResultSet rs = stat.executeQuery("SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES WHERE EMPLOYEES.SALARY = "+salary);
-		while(rs.next()){
-			System.out.print(rs.getString(1) + "\t");
-			System.out.print(rs.getString(2) + "\t");
-			System.out.print(rs.getString(3) + "\t");
-			System.out.print(rs.getString(4) + "\n");
+	public Employees() {
+		try {
+			db = new DBConn("localhost", "1521", "XE", "puser1", "puser1");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
 
-		rs.close(); 
-		stat.close();
-		conn.close();
+	public void getSalary(int salary)  {
+		String query = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES WHERE EMPLOYEES.SALARY = "+salary;
+
+		ResultSet rs;
+		try {
+			rs = db.sendSelectQuery(query);
+			while(rs.next()){
+				System.out.print(rs.getString(1) + "\t");
+				System.out.print(rs.getString(2) + "\t");
+				System.out.print(rs.getString(3) + "\t");
+				System.out.print(rs.getString(4) + "\n");
+				rs.close();
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public void close() {
+		try {
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args)  {
 		Employees db = new Employees();
-		db.getSalary(3000);
-		
+		db.getSalary(10000);
+		db.close();
 	}
 }

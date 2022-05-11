@@ -7,42 +7,55 @@ import java.sql.Statement;
 
 public class DBConn {
 	
-	public void localConnect() throws Exception{
+	private final static String DRIVER_NAME = "oracle.jdbc.driver.OracleDriver";
+	private final static String BASE_URL = "jdbc:oracle:thin:@";
+	private String url_address;
+	private Statement stat;
+	private Connection conn;
+	
+	
+	public DBConn(String address, String port, String serviceName, String username, String password) throws Exception { //로컬용
+		url_address = String.format("%s:%s/%s", address, port, serviceName);
+		this.createConnection(username, password);
+	}
+	
+	public DBConn(String tnsAlias, String walletPath, String username, String password) throws Exception { //클라우드용
+		url_address = String.format("%sTNS_ADMIN=%s", tnsAlias, walletPath);
+		this.createConnection(username, password);
+	}
+	
+	private void createConnection(String username, String password) throws Exception {
 		// 1. Driver 등록
-		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Class.forName(DRIVER_NAME);
 		
 		// 2. DBMS 연결
-		Connection conn = DriverManager.getConnection(
-				"jdbc:oracle:thin:@127.0.0.1:1521/XE","puser1", "puser1"
+		conn = DriverManager.getConnection(
+				BASE_URL + url_address, username, password
 				);
 		
 		// 3. Statement 생성
-		Statement stat = conn.createStatement();
-		
-		// 4. SQL 질의문 전송 및 반환
-//		int rowCount = stat.executeUpdate("INSERT INTO DEPARTMENTS VALUES(280, 'Tester', NULL, 1700)"); //INSERT문 예시
-//		int rowCount = stat.executeUpdate("UPDATE DEPARTMENTS SET DEPARTMENT_NAME = 'Dept Tester' WHERE DEPARTMENT_ID = 280"); //UPDATE문 예시
-		int rowCount = stat.executeUpdate("DELETE FROM DEPARTMENTS WHERE DEPARTMENT_ID = 280"); //DELETE문 예시
-		System.out.println(rowCount + "개 행이 반영되었습니다.");
-		
-		ResultSet rs = stat.executeQuery("SELECT * FROM DEPARTMENTS");
-		while(rs.next()){
-			System.out.print(rs.getString(1) + "\t");
-			System.out.print(rs.getString(2) + "\t");
-			System.out.print(rs.getString(3) + "\t");
-			System.out.print(rs.getString(4) + "\n");
-		}
-		
-		// 5. 객체 반환
-		rs.close(); //ResultSet 사용한 경우 반납처리
-		stat.close();
-		conn.close();
-		
+		stat = conn.createStatement();
 	}
 	
-	public static void main(String[] args) throws Exception {
-		DBConn myDB = new DBConn();
-		myDB.localConnect();
+	public ResultSet sendSelectQuery(String query) throws Exception {
+		return this.stat.executeQuery(query);
 	}
-
+	
+	public int sendInsertQuery(String query) throws Exception {
+		return this.stat.executeUpdate(query);
+	}
+	
+	public int sendUpdateQuery(String query) throws Exception {
+		return this.stat.executeUpdate(query);
+	}
+	
+	public int sendDeleteQuery(String query) throws Exception {
+		return this.stat.executeUpdate(query);
+	}
+	
+	public void close() throws Exception {
+		this.stat.close(); //열은 순서와 반대로 닫아주어야 한다. (데칼코마니처럼)
+		this.conn.close();
+	}
+	
 }

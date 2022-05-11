@@ -17,10 +17,10 @@ public class Employees {
 
 		ResultSet rs = stat.executeQuery("SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES WHERE EMPLOYEES.SALARY = "+salary);
 		while(rs.next()){
-			System.out.print(rs.getString(1) + "\t");
+			System.out.print(rs.getInt(1) + "\t");
 			System.out.print(rs.getString(2) + "\t");
 			System.out.print(rs.getString(3) + "\t");
-			System.out.print(rs.getString(4) + "\n");
+			System.out.print(rs.getInt(4) + "\n");
 		}
 
 		rs.close(); 
