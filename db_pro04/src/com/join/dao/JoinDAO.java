@@ -70,7 +70,7 @@ public class JoinDAO {
 		try {
 			int rs = db.sendDeleteQuery(query);
 			
-			if(rs == 1) { //행의 변화가 1이냐 -> 1개 업데이트하니까 
+			if(rs == 1) { //행의 변화가 1이냐 -> 1개 업데이트하니까  
 				return true;
 			}
 		} catch (Exception e) {
