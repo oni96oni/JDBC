@@ -14,14 +14,14 @@ public class JoinView {
 	
 	
 	public void show() {
-		System.out.println("  회원가입 프로그램  ");
-		System.out.println("-----------------");
-		System.out.println("  1. 회원 가입");
-		System.out.println("  2. 로그인");
-		System.out.println("  3. 프로그램 종료");
-		System.out.println("-----------------");
 
 		while(true) {
+			System.out.println("  회원가입 프로그램  ");
+			System.out.println("-----------------");
+			System.out.println("  1. 회원 가입");
+			System.out.println("  2. 로그인");
+			System.out.println("  3. 프로그램 종료");
+			System.out.println("-----------------");
 			System.out.print(">>> ");
 			String userInput = sc.nextLine();
 
@@ -31,6 +31,7 @@ public class JoinView {
 			case "2": 
 				this.loginMenu(); 	break;
 			case "3": 
+				System.out.println("프로그램을 종료합니다.");
 				System.exit(0);
 			default: System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
 			}
@@ -38,7 +39,7 @@ public class JoinView {
 	}
 
 	public void joinMenu() {
-		//회원 가입을 처리하기 위한 메서드
+		//회원 가입을 처리하기 위한 메서드, 객체를 이용하여 정보를 저장하고 꺼내오고 할것이니까 객체 생성후 입력정보를 넣어준다.
 		JoinVO data = new JoinVO();
 		
 		System.out.print("userid 입력 :");
