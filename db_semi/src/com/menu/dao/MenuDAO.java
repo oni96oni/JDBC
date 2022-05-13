@@ -46,7 +46,7 @@ public class MenuDAO {
 		
 	}*/
 	
-	public MenuVO randomGet() {
+	public MenuVO randomGetMenu() {
 		String query = "SELECT Menuname FROM Menu";
 
 		try {
