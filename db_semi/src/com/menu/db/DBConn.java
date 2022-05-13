@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class DBConn {
 	private String url_address;
 	private Statement stat;
 	private Connection conn;
+	private PreparedStatement pstat;
 
 	public DBConn(File config) throws Exception {
 		//oracle_db.conf !파일!로 DBMS연결하는법
@@ -43,23 +45,28 @@ public class DBConn {
 				);
 
 		// 3. Statement 생성
-		stat = conn.createStatement();
-	}
-
-	public ResultSet sendSelectQuery(String query) throws Exception {
-		return this.stat.executeQuery(query);
+//		stat = conn.createStatement();
 	}
 	
-	public int sendInsertQuery(String query) throws Exception {
-		return this.stat.executeUpdate(query);
+	public PreparedStatement getPstat(String query) throws Exception {
+		pstat = conn.prepareStatement(query);
+		return pstat;
 	}
 	
-	public int sendUpdateQuery(String query) throws Exception {
-		return this.stat.executeUpdate(query);
+	public ResultSet sendSelectQuery() throws Exception {
+		return this.pstat.executeQuery();
 	}
 	
-	public int sendDeleteQuery(String query) throws Exception {
-		return this.stat.executeUpdate(query);
+	public int sendInsertQuery() throws Exception {
+		return this.pstat.executeUpdate();
+	}
+	
+	public int sendUpdateQuery() throws Exception {
+		return this.pstat.executeUpdate();
+	}
+	
+	public int sendDeleteQuery() throws Exception {
+		return this.pstat.executeUpdate();
 	}
 	
 	public void close() throws Exception {

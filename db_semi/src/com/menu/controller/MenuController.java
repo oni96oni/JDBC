@@ -24,11 +24,10 @@ public class MenuController {
 	}
 
 	public boolean remove(String input) {
-		if(dao.get().getMenuname().equals(input)) {
+		if(dao.get(input) != null) { //삭제할 메뉴가 db에 있는지 확인하는 작업
 			return dao.remove(input);
 		} else {
 			return false;
 		}
 	}
-
 }

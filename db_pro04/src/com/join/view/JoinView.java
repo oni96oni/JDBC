@@ -2,7 +2,6 @@ package com.join.view;
 
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-
 import com.join.controller.JoinController;
 import com.join.menu.JoinMenu;
 import com.join.vo.JoinVO;
@@ -148,7 +147,7 @@ public class JoinView {
 				input = sc.nextLine();
 				if(jc.remove(account,input)) {
 					System.out.println("계정 삭제 작업이 완료되었습니다.");
-					return;
+					return; //afterLoginMenu메서드가 끝!
 				} else {
 					System.out.println("계정 삭제 작업에 실패하였습니다.");
 				}
