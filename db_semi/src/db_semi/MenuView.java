@@ -26,7 +26,7 @@ public class MenuView {
 			case "1": 
 				this.MenuInsert();	break;
 			case "2": 
-				this.RandomChoice(); 	break;
+				//				this.RandomChoice(); 	break;
 			case "3": 
 				//				this.MenuUpdate(); 	break;
 			case "4": 
@@ -85,7 +85,7 @@ public class MenuView {
 		 * Menu 테이블에 아무것도 없으면 메뉴 추가하라고 하기 -> 메뉴 인서트 메서드 켜주기
 		 * 그 외의 경우에는 메뉴 랜덤으로 출력 -> 하나만 출력
 		 */
-		MenuVO data[] = dao.get();
+		MenuVO data = dao.get();
 
 		if(data == null) { //null이면 테이블에 아무런 값도 없다는 뜻!
 			System.out.println("테이블에 아무런 메뉴가 없습니다. 메뉴추가를 시작합니다.");

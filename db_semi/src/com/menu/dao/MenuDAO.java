@@ -19,18 +19,15 @@ public class MenuDAO {
 		}
 	}
 
-	public MenuVO[] get() {
+	public MenuVO get() {
 		String query = String.format("SELECT Menuname FROM Menu");
 
 		try {
-			//메뉴이름을 배열로 저장해서 반환하고, 반환한것은 random클래스 이용해서 nextint를 배열길이로
 			ResultSet rs = db.sendSelectQuery(query);
 
 			if(rs.next()) {
-				MenuVO data[] = data[].setMenuname(rs.getString("Menuname"));
-				//				data.setPrice(rs.getString("Price"));
-				//				data.setTradename(rs.getString("Tradename"));
-				//				data.setLocation(rs.getString("Location"));
+				MenuVO data = new MenuVO(); 
+				data.setMenuname(rs.getString("Menuname"));
 				return data;
 			}
 		} catch (Exception e) {
