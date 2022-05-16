@@ -24,7 +24,7 @@ public class MenuView {
 
 			switch(userInput) {
 			case "1": 
-//				this.showMenuList();	break;
+				this.showMenuList();	break;
 			case "2": 
 				this.MenuInsert();		break;
 			case "3": 
@@ -44,6 +44,7 @@ public class MenuView {
 
 	public void showMenuList() {
 		System.out.println("저장되어 있는 메뉴,가격,판매점,위치를 출력합니다.");
+		dao.getMenuList();
 	}
 
 

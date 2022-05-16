@@ -3,6 +3,7 @@ package com.menu.dao;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.Random;
 import com.menu.db.DBConn;
 import com.menu.vo.MenuVO;
@@ -47,17 +48,28 @@ public class MenuDAO {
 	}*/
 	
 	public MenuVO randomGetMenu() {
-		String query = "SELECT Menuname FROM Menu";
+		String query = "SELECT * FROM Menu";
 
 		try {
 			PreparedStatement pstat = db.getPstat(query);
 			ResultSet rs = db.sendSelectQuery();
-			if(rs.next()) {
+			int i = 0;
+			MenuVO[] data = new MenuVO[i];
+			while(rs.next()) {
+				//next할때마다 동적배열로 늘려주기 or 애초에 카운트해서 길이잡기.
+				MenuVO[] temp2 = new MenuVO[i+1];
+				MenuVO temp = new MenuVO();
 				
-				MenuVO data[] = new MenuVO[5];
-				return data[rand.nextInt(data.length)+1];
+				temp.setMenuname(rs.getString("Menuname"));
+				temp.setPrice(rs.getString("Price"));
+				temp.setTradename(rs.getString("Tradename"));
+				temp.setLocation(rs.getString("Location"));
 				
+				data = Arrays.copyOf(temp2, temp2.length + 1);
+				data[i] = temp;
+				i++;
 			}
+			return data[rand.nextInt(i)];
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -151,5 +163,22 @@ public class MenuDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public void getMenuList() {
+		String query = "SELECT * FROM Menu";
+
+		try {
+			PreparedStatement pstat = db.getPstat(query);
+			ResultSet rs = db.sendSelectQuery();
+			while(rs.next()) {
+				System.out.print(pstat.getResultSet().getString("Menuname")); System.out.print("\t");
+				System.out.print(pstat.getResultSet().getString("Price")); System.out.print("\t");
+				System.out.print(pstat.getResultSet().getString("Tradename")); System.out.print("\t");
+				System.out.println(pstat.getResultSet().getString("Location")); 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
