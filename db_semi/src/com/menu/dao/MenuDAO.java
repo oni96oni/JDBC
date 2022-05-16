@@ -57,15 +57,14 @@ public class MenuDAO {
 			MenuVO[] data = new MenuVO[i];
 			while(rs.next()) {
 				//next할때마다 동적배열로 늘려주기 or 애초에 카운트해서 길이잡기.
-				MenuVO[] temp2 = new MenuVO[i+1];
+				data = Arrays.copyOf(data, data.length + 1);
 				MenuVO temp = new MenuVO();
 				
-				temp.setMenuname(rs.getString("Menuname"));
-				temp.setPrice(rs.getString("Price"));
-				temp.setTradename(rs.getString("Tradename"));
-				temp.setLocation(rs.getString("Location"));
+				temp.setMenuname(pstat.getResultSet().getString("Menuname"));
+				temp.setPrice(pstat.getResultSet().getString("Price"));
+				temp.setTradename(pstat.getResultSet().getString("Tradename"));
+				temp.setLocation(pstat.getResultSet().getString("Location"));
 				
-				data = Arrays.copyOf(temp2, temp2.length + 1);
 				data[i] = temp;
 				i++;
 			}
