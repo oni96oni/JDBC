@@ -105,7 +105,7 @@ public class MenuView {
 			System.out.println("테이블에 아무런 메뉴가 없습니다. 메뉴추가를 시작합니다.");
 			this.MenuInsert();
 		} else {
-			System.out.println(data.getMenuname()+" 가 나왔습니다."); //수에다가 get으로 조회해서 몇개들어가있는지 확인후 넣기
+			System.out.println(data.getMenuname()+" 가 나왔습니다.");
 		}
 	}
 
